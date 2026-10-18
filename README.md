@@ -6,6 +6,14 @@ Unofficial tooling to convert [AudarAI's Audar-ASR-V1-Turbo](https://huggingface
 
 AudarAI developed the original model and its training/adaptation. This project provides conversion and loading tooling; it is not affiliated with or endorsed by AudarAI.
 
+## What to download
+
+1. **Get this tool:** [Download ZIP](https://github.com/abdulrhmanG-alahmadi/audar-mlx/archive/refs/heads/main.zip), unzip it, then open Terminal in the extracted `audar-mlx-main` folder. Alternatively, use the Git commands under Install.
+2. **Original model:** [Audar-ASR-V1-Turbo on Hugging Face](https://huggingface.co/audarai/Audar-ASR-V1-Turbo). You do not need to manually download individual files: the conversion command below downloads the required checkpoint files directly from Audar.
+3. **Your MLX model:** there is no ready-made model download in this repository. After conversion, your model is saved locally in `models/audar-8bit/` inside the tool's folder (about 2.6 GB).
+
+The flow is: download this tool → install its dependencies → accept Audar's license → run conversion → transcribe your audio.
+
 ## License first
 
 Read the [AudarAI Community License v1.0](https://www.audarai.com/license/audarai-community-license-v1.0/) before downloading or using the model. The acceptance flag below records your explicit choice to proceed; it does not replace the license or any upstream access requirements.
@@ -26,6 +34,10 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
+**If you downloaded the ZIP:** skip `git clone` and use `cd` to enter the extracted folder instead, then run the commands starting with `python3.12 -m venv .venv`. Git is still needed to install the pinned MLX Audio dependency.
+
+If `python3.12` or `git` is not found, install Python 3.12 and Git before continuing. This tool requires Apple Silicon (M1 or newer), not an Intel Mac or a Windows PC.
+
 ## Convert on your Mac
 
 Only pass the acceptance flag after reading and agreeing to Audar's license:
@@ -34,13 +46,25 @@ Only pass the acceptance flag after reading and agreeing to Audar's license:
 python audar_mlx.py convert --accept-audar-license --output models/audar-8bit
 ```
 
+Keep Terminal open until it prints `Local model saved to ...`. The first run downloads approximately 4.7 GB and then converts it; duration depends on your internet connection and Mac. You only need to convert once. Keep the generated model folder on your own machine.
+
 The source is pinned to revision `371428bea487c7aec82b27dc21f8d4324002e98e`. Downloads exclude nested serving builds and remote Python files. Conversion removes custom processor routing metadata so MLX Audio can use its built-in processor. An existing output directory is never overwritten.
 
 ## Transcribe
 
+Put a short audio file named `clip.wav` in the tool's folder, then run:
+
 ```sh
 python audar_mlx.py transcribe --model models/audar-8bit clip.wav
 ```
+
+Your transcript prints in Terminal. You can also replace `clip.wav` with a full path; put paths containing spaces inside quotes:
+
+```sh
+python audar_mlx.py transcribe --model models/audar-8bit "/Users/yourname/Downloads/my recording.wav"
+```
+
+When you return later, open Terminal in the tool's folder and run `source .venv/bin/activate` before transcribing. No repeat download or conversion is needed.
 
 Start with speech clips under 30 seconds. This example caps generation at 256 tokens and does not provide streaming or long-recording chunking. It has not been validated against Audar's published benchmarks; quantization and decoding differences may change accuracy.
 
