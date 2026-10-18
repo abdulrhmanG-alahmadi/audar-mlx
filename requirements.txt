@@ -1,0 +1,1 @@
+mlx-audio @ git+https://github.com/Blaizzy/mlx-audio.git@53ba24be2181e2dee2b569ec3d03b0119b7e280d
