@@ -14,13 +14,7 @@ AudarAI developed the original model and its training/adaptation. This project p
 
 The flow is: download this tool → install its dependencies → accept Audar's license → run conversion → transcribe your audio.
 
-## License first
-
-Read the [AudarAI Community License v1.0](https://www.audarai.com/license/audarai-community-license-v1.0/) before downloading or using the model. The acceptance flag below records your explicit choice to proceed; it does not replace the license or any upstream access requirements.
-
-The model permits research and qualifying limited commercial use subject to its conditions. The converted files remain subject to Audar's license. This repository grants no permission to rehost them, remove notices, or bypass access controls. Publishing this tool is not a grant of rights to the model.
-
-The MIT license in this repository covers this project's original tooling only. MLX Audio and other dependencies retain their own licenses.
+The tool's code is [MIT licensed](LICENSE). The original model remains under [AudarAI's license](https://www.audarai.com/license/audarai-community-license-v1.0/).
 
 ## Install
 
